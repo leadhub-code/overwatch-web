@@ -5,5 +5,10 @@
   "main": "index.js",
   "repository": "git@github.com:messa/overwatch-web.git",
   "author": "Petr Messner <petr.messner@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "next": "^2.4.6",
+    "react": "^15.6.1",
+    "react-dom": "^15.6.1"
+  }
 }
