@@ -1,0 +1,8 @@
+google_oauth2:
+    client_id: 292...rkl.apps.googleusercontent.com
+    client_secret: 7i...ng
+    callback_url: https://overwatch.example.com/auth/google/callback
+allowed_emails:
+    - user1@example.com
+    - user2@example.com
+session_secret: topsecretstringhere
