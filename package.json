@@ -1,0 +1,9 @@
+{
+  "name": "overwatch-web",
+  "version": "0.0.1",
+  "description": "Overwatch monitoring web dashboard",
+  "main": "index.js",
+  "repository": "git@github.com:messa/overwatch-web.git",
+  "author": "Petr Messner <petr.messner@gmail.com>",
+  "license": "MIT"
+}
