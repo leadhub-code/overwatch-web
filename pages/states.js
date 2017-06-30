@@ -12,12 +12,14 @@ class IndexPage extends Component {
     return (
       <div>
         <CustomHead />
-        <TopMenu activeItem="dashboard" />
+        <TopMenu activeItem="states" />
 
         <Container>
-          <h1 className="pageTitle">Dashboard</h1>
+
+          <h1 className="pageTitle">States</h1>
 
           <p>Lorem ipsum</p>
+
         </Container>
 
       </div>

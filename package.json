@@ -19,7 +19,8 @@
     "passport": "^0.3.2",
     "passport-google-oauth": "^1.0.0",
     "react": "^15.6.1",
-    "react-dom": "^15.6.1"
+    "react-dom": "^15.6.1",
+    "semantic-ui-react": "^0.70.0"
   },
   "scripts": {
     "dev": "node server",
