@@ -6,34 +6,6 @@ import CustomHead from '../components/CustomHead'
 import TopMenu from '../components/TopMenu'
 import NiceDate from '../components/NiceDate'
 
-const StateValue = (props) => {
-  const { data } = props;
-  if (data instanceof Object) {
-    return (
-      <List bulleted style={{ marginTop: 0, marginBottom: 0, paddingTop: 3 }}>
-        {Object.entries(data).map(([k, v]) => (
-          <List.Item key={k} style={{ marginTop: 0, marginBottom: 0, paddingTop: 0 }}>
-            {k}: <StateValue data={v} />
-          </List.Item>
-        ))}
-      </List>
-    );
-  }
-  return (
-    <code>{JSON.stringify(data)}</code>
-  );
-};
-
-const StateTag = (props) => {
-  const { tagKey, tagValue } = props;
-  return (
-    <List.Item>
-    {tagKey}:{' '}
-    <code>{JSON.stringify(tagValue)}</code>
-    </List.Item>
-  );
-};
-
 const sortCompareStates = (a, b) => {
   try {
     if (a['agent']['internal_id'] < b['agent']['internal_id']) {
@@ -92,13 +64,24 @@ const CSListing = (props) => {
             <Grid.Column width={4}>
               <div className="cellTitle">Tags</div>
               <List bulleted>
-                {Object.entries(state['tags']).map(([k, v]) => <StateTag key={k} tagKey={k} tagValue={v} />)}
+                {state['tags'].map(({key, value}) => (
+                  <List.Item key={key}>
+                    {key}: <code>{JSON.stringify(value)}</code>
+                  </List.Item>
+                ))}
               </List>
+
             </Grid.Column>
 
             <Grid.Column width={8}>
-              <div className="cellTitle">Values</div>
-              <StateValue data={state['values']} />
+              <div className="cellTitle">Values and checks</div>
+              <List bulleted>
+                {state['values'].map(({key, value}) => (
+                  <List.Item key={key}>
+                    {key}: <code>{JSON.stringify(value)}</code>
+                  </List.Item>
+                ))}
+              </List>
             </Grid.Column>
 
           </Grid.Row>
