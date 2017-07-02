@@ -1,4 +1,3 @@
-
 docker_image=gatekeeper
 
 run:

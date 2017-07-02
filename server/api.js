@@ -4,6 +4,9 @@ import proxy from 'http-proxy-middleware'
 import configuration from './configuration'
 
 const hubUrl = configuration.get('overwatch_hub:url');
+if (!hubUrl) {
+  throw new Error('Missing configuration overwatch_hub:url');
+}
 
 export const router = Router();
 

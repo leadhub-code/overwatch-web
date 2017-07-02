@@ -18,6 +18,10 @@ class IndexPage extends Component {
 
           <p>Lorem ipsum</p>
 
+          <h1>Recent alerts</h1>
+
+          <p>Lorem ipsum</p>
+
         </Container>
 
       </div>
