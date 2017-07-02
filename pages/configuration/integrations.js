@@ -21,10 +21,7 @@ class IndexPage extends Component {
 
               <h1>Integrations</h1>
 
-              <p>Lorem ipsum xa</p>
-              <p>Lorem ipsum xa</p>
-              <p>Lorem ipsum xa</p>
-              <p>Lorem ipsum xa</p>
+              <p>todo :)</p>
 
             </Grid.Column>
           </Grid>

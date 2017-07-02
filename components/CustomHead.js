@@ -76,6 +76,11 @@ export default (props) => (
         text-transform: uppercase;
       }
 
+      p {
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+      }
+
       a {
         color: #06c;
       }

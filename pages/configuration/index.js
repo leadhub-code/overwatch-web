@@ -75,6 +75,8 @@ class IndexPage extends Component {
 
               {configurationInfo}
 
+              <p>todo :)</p>
+
               <br />
 
               <p>

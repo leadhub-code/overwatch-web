@@ -15,7 +15,8 @@ class IndexPage extends Component {
         <Container>
           <h1 className="pageTitle">Dashboard</h1>
 
-          <p>Lorem ipsum</p>
+          <p>todo :)</p>
+
         </Container>
 
       </div>

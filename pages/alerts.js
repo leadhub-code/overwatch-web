@@ -16,11 +16,11 @@ class IndexPage extends Component {
 
           <h1>Active alerts</h1>
 
-          <p>Lorem ipsum</p>
+          <p>todo :)</p>
 
           <h1>Recent alerts</h1>
 
-          <p>Lorem ipsum</p>
+          <p>todo :)</p>
 
         </Container>
 
