@@ -7,6 +7,7 @@ import session from 'express-session'
 
 import configuration from './configuration'
 import { setupServer, authRouter } from './auth'
+import api from './api'
 
 // make it easily stoppable if running inside Docker container
 Array.from(["SIGINT", "SIGTERM"]).map((sig) => {
@@ -43,6 +44,7 @@ app.prepare()
   //server.get('/debug', (req, res) => res.json(req.user))
 
   server.use(authRouter);
+  server.use(api);
 
   server.get('/', (req, res) => {
     if (req.user) {
