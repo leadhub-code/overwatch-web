@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Container, Divider, Segment, Grid, List } from 'semantic-ui-react'
+import { Container, Divider, Segment, Grid, List, Label } from 'semantic-ui-react'
 import 'isomorphic-fetch'
 
 import CustomHead from '../components/CustomHead'
@@ -77,10 +77,27 @@ const CSListing = (props) => {
               <div className="cellTitle">Values and checks</div>
               <List bulleted>
                 {state['values'].map(({key, value}) => (
-                  <List.Item key={key}>
+                  <List.Item key={'value_' + key}>
                     {key}: <code>{JSON.stringify(value)}</code>
                   </List.Item>
                 ))}
+
+                {state['checks'].map(({key, status}) => (
+                  <List.Item key={'check_' + key}>
+                    {key}: <Label color={status} horizontal size="small">{status}</Label>
+                  </List.Item>
+                ))}
+
+                {state['expire_checks'].map(({key, deadline}) => (
+                  <List.Item key={'expire_check_' + key}>
+                    {key}: {
+                      (new Date(deadline) > new Date())
+                        ? (<Label horizontal color="green" size="small"><NiceDate date={deadline} /></Label>)
+                        : (<Label horizontal color="red" size="small"><NiceDate date={deadline} /></Label>)
+                    }
+                  </List.Item>
+                ))}
+
               </List>
             </Grid.Column>
 
