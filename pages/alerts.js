@@ -7,8 +7,6 @@ import TopMenu from '../components/TopMenu'
 class IndexPage extends Component {
 
   render() {
-    const { siteTitle } = this.props;
-    const activeItem = 'messages';
     return (
       <div>
         <CustomHead />
@@ -16,7 +14,7 @@ class IndexPage extends Component {
 
         <Container>
 
-          <h1 className="pageTitle">Alerts</h1>
+          <h1>Active alerts</h1>
 
           <p>Lorem ipsum</p>
 

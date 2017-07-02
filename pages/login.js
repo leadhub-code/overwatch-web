@@ -4,7 +4,6 @@ import { Menu, Container, Button, Icon } from 'semantic-ui-react'
 class IndexPage extends React.Component {
 
   render() {
-    const { siteTitle } = this.props;
     return (
       <div className="loginPage">
         <CustomHead />

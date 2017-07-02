@@ -89,14 +89,14 @@ const CSListing = (props) => {
 
             </Grid.Column>
 
-            <Grid.Column width={5}>
+            <Grid.Column width={4}>
               <div className="cellTitle">Tags</div>
               <List bulleted>
                 {Object.entries(state['tags']).map(([k, v]) => <StateTag key={k} tagKey={k} tagValue={v} />)}
               </List>
             </Grid.Column>
 
-            <Grid.Column width={7}>
+            <Grid.Column width={8}>
               <div className="cellTitle">Values</div>
               <StateValue data={state['values']} />
             </Grid.Column>
@@ -166,9 +166,7 @@ class IndexPage extends Component {
   }
 
   render() {
-    const { siteTitle } = this.props;
     const { currentStatesLoading, currentStates } = this.state;
-    const activeItem = 'messages';
     return (
       <div>
         <CustomHead />
@@ -176,7 +174,7 @@ class IndexPage extends Component {
 
         <Container>
 
-          <h1 className="pageTitle">States</h1>
+          <h1>Current states</h1>
 
           {currentStatesLoading ? <CSLoading /> : <CSListing currentStates={currentStates} />}
 

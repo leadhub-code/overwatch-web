@@ -18,9 +18,18 @@ export default (props) => (
         font-family: Roboto, sans-serif;
         font-weight: 600;
       }
-      .ui.menu {
+      .topMenu {
+        margin-bottom: 1.5rem;
+      }
+      .topMenu .ui.menu {
         border-radius: 0;
       }
+
+      pre, code {
+        font-family: Terminus, monospace;
+        font-size: 11px;
+      }
+
       pre.debug {
         color: #666;
         font-family: Terminus, monospace;
@@ -33,9 +42,13 @@ export default (props) => (
       h1 {
         font-family: Roboto condensed, sans-serif;
         font-weight: 600;
-        font-size: 28px;
+        font-size: 19px;
         /* color: #2185D0; */
-        color: #246;
+        color: #000;
+        letter-spacing: 1px;
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+        text-transform: uppercase;
       }
 
       .loginPage h1 {

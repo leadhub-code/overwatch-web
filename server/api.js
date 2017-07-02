@@ -20,4 +20,10 @@ router.use('/api/hub', (req, res, next) => {
   hubProxy(req, res, next);
 });
 
+router.get('/api/configuration', (req, res) => {
+  return res.json({
+    hubUrl: hubUrl,
+  });
+});
+
 export default router;
