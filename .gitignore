@@ -1,0 +1,5 @@
+.DS_Store
+local
+node_modules
+.next
+*.log
