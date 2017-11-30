@@ -1,7 +1,7 @@
 Overwatch web UI
 ================
 
-Implemented using React and [Next.js](https://github.com/zeit/next.js).
+Implemented using [React.js](https://reactjs.org/), [Next.js](https://github.com/zeit/next.js) and [Semantic UI React](https://react.semantic-ui.com/).
 
 See [Overwatch monitoring overview](https://github.com/leadhub-code/overwatch-monitoring/blob/master/README.md).
 
