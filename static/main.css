@@ -1,0 +1,38 @@
+html, body {
+  overflow-x: hidden;
+}
+
+body {
+  xfont-family: Roboto, sans-serif;
+}
+
+.SeriesList code.seriesId {
+  font-size: 13px;
+}
+
+.lightLabel {
+  text-transform: uppercase;
+  font-size: 11px;
+  color: #999;
+}
+
+code, pre {
+  font-family: Roboto mono, monospace;
+}
+
+pre {
+  font-size: 12px;
+  line-height: 1.25;
+}
+
+pre.almostInvisible {
+  color: #808080;
+  font-size: 9px;
+}
+pre.almostInvisible:hover {
+  color: #000;
+}
+
+a, .ui.breadcrumb a {
+  color: #059;
+}
