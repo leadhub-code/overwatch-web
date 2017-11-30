@@ -16,11 +16,12 @@ Array.from(["SIGINT", "SIGTERM"]).map((sig) => {
   });
 });
 
-const dev = process.env.NODE_ENV !== 'production'
-const app = next({ dev })
-const handle = app.getRequestHandler()
+const dev = process.env.NODE_ENV !== 'production';
+const app = next({ dev });
+const handle = app.getRequestHandler();
 
 const allowInsecureDevLogin = configuration.get('allow_insecure_dev_login') || false;
+const port = configuration.get('port') || 3000;
 
 app.prepare()
 .then(() => {
@@ -65,8 +66,8 @@ app.prepare()
     return handle(req, res);
   });
 
-  server.listen(3000, (err) => {
+  server.listen(port, (err) => {
     if (err) throw err;
-    console.log(`> Ready on http://localhost:3000 (pid ${process.pid})`);
+    console.log(`> Ready on http://localhost:${port} (pid ${process.pid})`);
   });
 });

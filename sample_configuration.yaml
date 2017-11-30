@@ -8,5 +8,5 @@ allowed_emails:
     - developer2@example.com
 session_secret: topsecretstringhere
 overwatch_hub:
-    api_url: http://localhost:8090
+    api_url: http://127.0.0.1:8090
     client_token: secret_client_token

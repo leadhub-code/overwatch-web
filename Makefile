@@ -1,4 +1,4 @@
-conf=sample-configuration.yaml
+conf=sample_configuration.yaml
 
 dev:
 	test -d node_modules || yarn install
