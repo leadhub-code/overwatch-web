@@ -1,8 +1,10 @@
+conf=sample-configuration.yaml
+
 dev:
 	test -d node_modules || yarn install
-	yarn dev
+	OVERWATCH_WEB_CONF=$(conf) yarn dev
 
 run:
 	test -d node_modules || yarn install
 	yarn build
-	yarn start
+	OVERWATCH_WEB_CONF=$(conf) yarn start
