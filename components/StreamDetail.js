@@ -4,7 +4,7 @@ import { Icon, Label, Table } from 'semantic-ui-react'
 
 import StreamLabel from './StreamLabel'
 
-const cachedStreams = {};
+const cachedStreamData = {};
 
 const formatValue = (v) => {
   if (typeof v === 'number') {
@@ -15,16 +15,14 @@ const formatValue = (v) => {
   return v;
 };
 
-const StreamDetailContent = ({ stream }) => (
+const StreamDetailContent = ({ stream, itemTree }) => (
   <div className='StreamDetailContent'>
     <p>Label: <StreamLabel label={stream.label} /></p>
     {!stream.currentDatapoint ? null : (
       <div>
         <h2>Current data</h2>
         <p>Current datapoint: {new Date(stream.currentDatapoint.date) + ''}</p>
-        {stream.currentDatapoint.items.map(item => (
-          <DatapointItem key={item.path} item={item} />
-        ))}
+        <DatapointTree node={itemTree} />
         <h2>Current alerts</h2>
         {stream.currentAlerts.length === 0
           ? (<p><Icon name='check' color='green' />No alerts</p>)
@@ -36,18 +34,65 @@ const StreamDetailContent = ({ stream }) => (
   </div>
 );
 
-const DatapointItem = ({ item }) => (
-  <div>
-    <p>
-      <strong>{item.path.join(' > ')}:</strong>{' '}
-      <code>{(typeof item.value === 'undefined' || item.value === null) ? null : JSON.stringify(item.value)}</code>
-      {(!item.check || !item.check.state) ? null : (
+// const getLastItem = arr => arr[arr.length - 1];
+
+const DatapointTree = ({ node }) => {
+  const { name, childNodes, item } = node;
+  return (
+    <div className='DatapointTree'>
+      {!name ? null : (<strong>{name}</strong>)}
+      {!item ? null : ': '}
+      {!item ? null : (<DatapointItemValue name={name} value={item.value} />)}
+      {(!item || !item.check || !item.check.state) ? null : (
         <DatapointItemCheck state={item.check.state} />
       )}
-      {(!item.watchdog || !item.watchdog.deadline) ? null : (
+      {(!item || !item.watchdog || !item.watchdog.deadline) ? null : (
         <DatapointItemWatchdog deadline={item.watchdog.deadline} />
       )}
-    </p>
+      {!childNodes.length ? null : (
+        <ul>
+          {childNodes.map((childNode, n) => (
+            <li key={n}>
+              <DatapointTree node={childNode} />
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
+};
+
+const DatapointItemValue = ({ name, value }) => {
+  if (name.endsWith('_bytes') && Number.isInteger(value)) {
+    return (
+      <span>
+        {formatBytesValue(value)}{' '}
+        <small style={{ color: '#999' }}>(<code>{JSON.stringify(value)}</code>)</small>
+      </span>
+    );
+  }
+  return (
+    <code>{JSON.stringify(value)}</code>
+  );
+};
+
+const formatBytesValue = n => {
+  if (n >= 1073741824) return `${(n / 1073741824).toFixed(2)} GB`;
+  if (n >= 1048576) return `${(n / 1048576).toFixed(2)} MB`;
+  if (n >= 1024) return `${(n / 1024).toFixed(2)} kB`;
+  return `${n} bytes`;
+};
+
+const DatapointItem = ({ item }) => (
+  <div>
+    <strong>{item.path.join(' > ')}:</strong>{' '}
+    <code>{(typeof item.value === 'undefined' || item.value === null) ? null : JSON.stringify(item.value)}</code>
+    {(!item.check || !item.check.state) ? null : (
+      <DatapointItemCheck state={item.check.state} />
+    )}
+    {(!item.watchdog || !item.watchdog.deadline) ? null : (
+      <DatapointItemWatchdog deadline={item.watchdog.deadline} />
+    )}
   </div>
 );
 
@@ -107,13 +152,51 @@ const StreamAlert = ({ alert }) => {
   return (<p>{JSON.stringify(alert)}</p>);
 };
 
+const compare = (a, b) => {
+  if (a < b) return -1;
+  if (a > b) return 1;
+  return 0;
+};
+
+const itemsToTree = (items) => {
+  //const itemsByPath = new Map(items.map(item => [item['path'], item]));
+  const nodesByPath = new Map();
+  const serializePath = path => JSON.stringify(path);
+  const rootNode = { name: null, childNodes: [] };
+  nodesByPath.set(serializePath([]), rootNode);
+  const getNode = (path) => {
+    if (!Array.isArray(path)) {
+      throw new Error('path must be Array');
+    }
+    const serializedPath = serializePath(path);
+    if (nodesByPath.has(serializedPath)) {
+      return nodesByPath.get(serializedPath);
+    }
+    if (!path) {
+      throw new Error('xxx');
+    }
+    const parentPath = path.slice(0, -1);
+    const parent = getNode(parentPath);
+    const node = { name: path[path.length-1], childNodes: [] };
+    nodesByPath.set(serializedPath, node);
+    parent.childNodes.push(node);
+    return node;
+  };
+  for (const item of items) {
+    getNode(item['path']).item = item;
+  }
+  for (const node of nodesByPath.values()) {
+    node.childNodes.sort((n1, n2) => compare(n1.name || '', n2.name || ''));
+  }
+  return rootNode;
+};
 
 export default class StreamDetail extends React.Component {
 
     fetchStreamTimeoutHandle = null;
 
     state = {
-      mounted: false
+      mounted: false,
     }
 
     componentDidMount() {
@@ -138,21 +221,22 @@ export default class StreamDetail extends React.Component {
       this.setState({ [`streamLoading${streamId}`]: true });
       const r = await fetch(`/api/streams/${streamId}`, { credentials: 'same-origin' });
       const { stream } = await r.json();
-      cachedStreams[streamId] = stream;
+      const itemTree = itemsToTree(stream['currentDatapoint']['items']);
+      const streamData = { stream, itemTree };
+      cachedStreamData[streamId] = streamData;
       this.setState({
         [`streamLoading${streamId}`]: false,
-        [`stream${streamId}`]: stream,
+        [`streamData${streamId}`]: streamData,
       });
     }
 
-
   render() {
     const { streamId } = this.props;
-    const stream = this.state[`stream${streamId}`] || cachedStreams[streamId] || {};
+    const { stream, itemTree } = this.state[`streamData${streamId}`] || cachedStreamData[streamId] || {};
     return (
       <div className='StreamDetail'>
         {(!stream || !stream.label) ? null : (
-          <StreamDetailContent stream={stream} />
+          <StreamDetailContent stream={stream} itemTree={itemTree} />
         )}
       </div>
     );
