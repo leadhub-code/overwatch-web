@@ -30,9 +30,11 @@ export default (props) => {
     >
       <Menu.Item header>Overwatch</Menu.Item>
       {!user ? null : menuItems.map((item, n) => (
-        <Menu.Item key={n} active={activeItem === item.name}>
-          <Link href={item.href}><a>{item.title || titleCase(item.name)}</a></Link>
-        </Menu.Item>
+        <Link key={n} href={item.href}>
+          <a className={`item ${activeItem === item.name ? 'active' : ''}`}>
+            {item.title || titleCase(item.name)}
+          </a>
+        </Link>
       ))}
       <Menu.Menu position='right'>
         {!user ? null : (
