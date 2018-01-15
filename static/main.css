@@ -1,9 +1,16 @@
 html, body {
-  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
 }
 
-body {
-  xfont-family: Roboto, sans-serif;
+html {
+  overflow-x: hidden;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
+}
+
+.ui.menu {
+  overflow-x: auto;
 }
 
 .SeriesList code.seriesId {
