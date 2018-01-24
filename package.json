@@ -13,13 +13,13 @@
     "express": "^4.16.2",
     "express-session": "^1.15.6",
     "js-yaml": "^3.10.0",
-    "nconf": "^0.9.1",
-    "next": "^4.1.4",
+    "nconf": "^0.10.0",
+    "next": "^4.2.3",
     "passport": "^0.4.0",
     "passport-google-oauth": "^1.0.0",
-    "react": "^16.1.1",
-    "react-dom": "^16.1.1",
-    "semantic-ui-react": "^0.76.0"
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "semantic-ui-react": "^0.77.2"
   },
   "scripts": {
     "dev": "node server",
