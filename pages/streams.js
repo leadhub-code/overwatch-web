@@ -35,8 +35,6 @@ export default class OverviewPage extends React.Component {
 
           <StreamList />
 
-          <p style={{ textAlign: 'center', color: '#eee', fontSize: 30 }}>❦</p>
-
         </Container>
 
         <br />
